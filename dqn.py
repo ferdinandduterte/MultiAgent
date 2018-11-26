@@ -1,8 +1,7 @@
 import random
 import numpy as np
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.optimizers import Adam
+import tensorflow as tf
+from tensorflow.keras import layers
 
 
 class DQN:
@@ -21,11 +20,11 @@ class DQN:
         self.update_target_weights()
 
     def build_network(self):
-        model = Sequential()
-        model.add(Dense(50, input_dim=self.state_size, activation='relu'))
-        model.add(Dense(50, activation='relu'))
-        model.add(Dense(self.n_actions, activation='linear'))
-        model.compile(loss='mse', optimizer=Adam(self.learning_rate))
+        model = tf.keras.Sequential()
+        model.add(layers.Dense(50, input_dim=self.state_size, activation='relu'))
+        model.add(layers.Dense(50, activation='relu'))
+        model.add(layers.Dense(self.n_actions, activation='linear'))
+        model.compile(loss='mse', optimizer=tf.train.AdamOptimizer(self.learning_rate))
 
         return model
 
